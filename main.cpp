@@ -1,14 +1,17 @@
 #include <iostream>
 #include "FBullCowGame.h"
 
+// To be consistent with UnrealEngine API
+using FText = std::string;
+using int32 = int;
+
 void PrintIntro();
 void PlayGame();
-std::string GetGuess();
+FText GetGuess();
 bool AskToPlayAgain();
 
 // main entry point of the game
-
-int main()
+int32 main()
 {
   do
     {
@@ -22,16 +25,17 @@ int main()
 // Introduce the Game and get user input
 void PrintIntro()
 {
-  constexpr int WORD_LENGTH = 5;
+  // TODO add ascii art or some decoration
+  constexpr int32 WORD_LENGTH = 5;
   std::cout << "Welcome to Bulls and Cows!!"<< std::endl;
   std::cout << "Can you guess a "<< WORD_LENGTH <<" character letter I'm thinking of?\n";
   return;
 }
 
 // Get user input string
-std::string GetGuess()
+FText GetGuess()
 {
-  std::string Guess = "";
+  FText Guess = "";
   std::cout << "Enter your guess : ";
   std::getline(std::cin, Guess);
   return Guess;
@@ -41,20 +45,23 @@ std::string GetGuess()
 void PlayGame()
 {
   FBullCowGame BCGame;
-  constexpr int NUMBER_OF_TURNS = 5;
-  std::string Guess = "";
-  for(int count = 0; count<NUMBER_OF_TURNS; count++)
+  BCGame.Reset(); // current Try = 1, max Tries = 5
+  const int32 NUMBER_OF_TURNS = BCGame.GetMaxTries();
+  FText Guess = "";
+  for(int32 count = 0; count<NUMBER_OF_TURNS; count++) //TODO change to while loop
   {
       Guess = GetGuess();
+      //TODO validate input
       std::cout<<"You entered : " <<Guess<<std::endl;
   }
+  // TODO add a game summary
 }
 
 
 bool AskToPlayAgain()
 {
   std::cout<<"Do you want to play again? [Y/N]";
-  std::string Response = "";
+  FText Response = "";
   std::getline(std::cin, Response);
   if(Response[0] == 'y'|| Response[0] == 'Y')
     return true;

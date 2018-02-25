@@ -1,28 +1,38 @@
 #include "FBullCowGame.h"
 
+// To be consistent with UnrealEngine API
+using FString = std::string;
+using int32 = int;
+
+FBullCowGame::FBullCowGame()
+{
+  Reset();
+}
 void FBullCowGame::Reset()
 {
+  CurrentTry = 1;
+  MaxTries = 5;
   return;
 }
 
-bool FBullCowGame::CheckGuessValidity(std::string)
+bool FBullCowGame::CheckGuessValidity(FString) const
 {
   return true;
 }
 
-bool FBullCowGame::IsGameWon()
+bool FBullCowGame::IsGameWon() const
 {
   return false;
 }
 
-int FBullCowGame::GetMaxTries()
+int32 FBullCowGame::GetMaxTries() const
 {
-  return 0;
+  return MaxTries;
 }
 
-int FBullCowGame::GetCurrentTry()
+int32 FBullCowGame::GetCurrentTry() const
 {
-  return 0;
+  return CurrentTry;
 }
 
 
