@@ -5,7 +5,7 @@
 using FText = std::string;
 using int32 = int;
 
-void PrintIntro();
+void PrintIntro(int32);
 void PlayGame();
 FText GetGuess();
 bool AskToPlayAgain();
@@ -15,7 +15,6 @@ int32 main()
 {
   do
     {
-      PrintIntro();
       PlayGame();
     } while (AskToPlayAgain());
   return 0;
@@ -23,12 +22,11 @@ int32 main()
 
 
 // Introduce the Game and get user input
-void PrintIntro()
+void PrintIntro(int32 HiddenWordLength)
 {
   // TODO add ascii art or some decoration
-  constexpr int32 WORD_LENGTH = 5;
   std::cout << "Welcome to Bulls and Cows!!"<< std::endl;
-  std::cout << "Can you guess a "<< WORD_LENGTH <<" character letter I'm thinking of?\n";
+  std::cout << "Can you guess a "<< HiddenWordLength <<" character letter I'm thinking of?\n";
   return;
 }
 
@@ -48,11 +46,13 @@ void PlayGame()
   BCGame.Reset(); // current Try = 1, max Tries = 5
   const int32 NUMBER_OF_TURNS = BCGame.GetMaxTries();
   FText Guess = "";
+  PrintIntro(BCGame.GetHiddenWordLength());
   for(int32 count = 0; count<NUMBER_OF_TURNS; count++) //TODO change to while loop
   {
       Guess = GetGuess();
+      FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
       //TODO validate input
-      std::cout<<"You entered : " <<Guess<<std::endl;
+      std::cout<<"Bulls =  " <<BullCowCount.Bulls<<", Cows =  " <<BullCowCount.Cows<<std::endl;
   }
   // TODO add a game summary
 }
